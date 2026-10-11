@@ -1,0 +1,32 @@
+; Engine configuration file.
+[application]
+config/name="VisionSMRTester"
+config/features=PackedStringArray("4.4")
+config/icon="res://icon.png"
+
+[display]
+window/size/width=1920
+window/size/height=1080
+window/size/mode=2
+window/fullscreen_mode=2
+window/vsync/vsync_mode=1
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+
+[android]
+package/name="com.visionsmrtester.app"
+package/version_code=1
+package/version_name="1.0.0"
+package/min_sdk_version=24
+package/target_sdk_version=34
+permissions/camera=true
+permissions/wake_lock=true
+abi/arm64_v8a=true
+
+[input]
+map/ui_cancel = Key("escape")
+map/click = MouseButton(1)
