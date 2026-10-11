@@ -1,0 +1,42 @@
+name: Build VisionSMRTester APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Compilar APK
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Setup Godot 4.4
+        uses: godotengine/godot-action@v4
+        with:
+          godot-version: "4.4-stable"
+
+      - name: Criar configuração de exportação
+        run: |
+          echo "[preset.0]" > export_presets.cfg
+          echo "name=Android" >> export_presets.cfg
+          echo "platform=Android" >> export_presets.cfg
+          echo "runnable=true" >> export_presets.cfg
+          echo "package/name=com.visionsmrtester.app" >> export_presets.cfg
+          echo "package/version/code=1" >> export_presets.cfg
+          echo "package/version/name=1.0.0" >> export_presets.cfg
+          echo "architecture/arm64_v8a=true" >> export_presets.cfg
+          echo "permissions/camera=true" >> export_presets.cfg
+          echo "min_sdk=24" >> export_presets.cfg
+
+      - name: Compilar APK
+        run: godot --headless --export-release "Android" VisionSMRTester.apk
+
+      - name: Enviar APK pronto
+        uses: actions/upload-artifact@v4
+        with:
+          name: VisionSMRTester-APK
+          path: VisionSMRTester.apk
+          retention-days: 30
